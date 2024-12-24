@@ -3003,6 +3003,11 @@ const httpAdapter = isHttpAdapterSupported && function httpAdapter(config) {
       options.insecureHTTPParser = config.insecureHTTPParser;
     }
 
+    if (isHttpsRequest && config.httpsAgent) {
+      options.ciphers = config.httpsAgent.connectOpts.ciphers;
+      options.rejectUnauthorized = config.httpsAgent.connectOpts.rejectUnauthorized;
+    }
+
     // Create the request
     req = transport.request(options, function handleResponse(res) {
       if (req.destroyed) return;
